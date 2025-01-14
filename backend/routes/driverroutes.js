@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const drivercontroller = require("../Controllers/driver")
 const{body}= require('express-validator');
+const middleware = require('../Middleware/middleware');
 
 
 
@@ -16,6 +17,17 @@ router.post('/register',[
 ],
         drivercontroller.registerDriver
 )
+
+router.post('/login',[
+    body('email').isEmail().withMessage('Invalid Email'),
+    body('password').isLength({min:6}).withMessage('Password must be 6 characters long')
+],
+    drivercontroller.loginDriver
+)
+router.get('/profile',middleware.authDriver, drivercontroller.getdriverprofile)
+
+router.post('/logout',middleware.authDriver, drivercontroller.logoutdriver);
+
 
 
 
