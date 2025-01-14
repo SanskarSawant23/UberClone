@@ -3,7 +3,7 @@ const app = express();
 const cors = require('cors');
 const db = require('./Db/db')
 const userRoutes = require('./routes/userroute')
-
+const driverroutes = require('./routes/driverroutes');
 
 db();
 
@@ -20,6 +20,7 @@ app.get('/', (req, res)=>{
     
 })
 app.use('/users', userRoutes)
+app.use('/driver', driverroutes)
 
 
 
