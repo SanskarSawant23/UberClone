@@ -68,7 +68,7 @@ module.exports.getdriverprofile = async(req, res, next)=>{
 module.exports.logoutdriver = async(req,res,next)=>{
 
     const token = req.authorization?.split(' ')[1];
-   const BT= await blacklisttoken.create({token});
+    const BT= await blacklisttoken.create({token});
    
     console.log(BT);
     res.status(200).json({msg:"Logout successfully"});
