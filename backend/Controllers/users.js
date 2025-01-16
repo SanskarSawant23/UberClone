@@ -64,7 +64,7 @@ module.exports.getUserProfile = async(req, res, next)=>{
 }
 
 module.exports.logoutUser = async(req, res, next)=>{
-    const token = req.header.authorization.split(' ')[1];
+    const token = req.header.authorization?.split(' ')[1];
 
     await blacklistTokenModel.create({token});
 

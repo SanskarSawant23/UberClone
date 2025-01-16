@@ -10,6 +10,9 @@ import { Driverlogin } from './Pages/Driverlogin';
 import Driversignup from './Pages/Driversignup';
 import Start from './Pages/Start';
 import Home from './Pages/Home';
+import { UserProtectWrapper } from './Pages/UserProtectWrapper';
+import { Userlogout } from './Pages/Userlogout';
+import Driverhome from './Pages/Driverhome';
 
 function App() {
 
@@ -23,7 +26,15 @@ function App() {
           <Route path='/signup' element={<Usersignup />} />
           <Route path='/driver-login' element={<Driverlogin />} />
           <Route path='/driver-signup' element={<Driversignup />} />
-          <Route path='/home' element= {<Home/>}/>
+          <Route path='/home' element= {
+            <UserProtectWrapper>
+              <Home/>
+            </UserProtectWrapper>
+          }/>
+          <Route path='/user/logout' element={<UserProtectWrapper>
+            <Userlogout></Userlogout>
+          </UserProtectWrapper>}/>
+          <Route path = '/driver-home' element={<Driverhome/>} />
         </Routes>
       </div>
   

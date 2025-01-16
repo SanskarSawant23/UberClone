@@ -32,9 +32,10 @@ const Usersignup = () => {
       if(response.status === 201){
         const data = response.data
         setUser(data.user);
-        console.log("navigation to /home")
+        localStorage.setItem('token', data.token);
+
         navigate('/home')
-        console.log("navigation complete")
+       
       }
    
       setEmail('');

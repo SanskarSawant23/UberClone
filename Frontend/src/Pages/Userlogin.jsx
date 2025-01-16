@@ -13,16 +13,26 @@ const Userlogin = () => {
  const navigate = useNavigate();
   const onSubmithandler = async (e)=>{
     e.preventDefault();
-    console.log('eeelo')
+   
   
     setUserData({
         email:email,
         password:password
     })
-    const response = await axios.post(`http://localhost:4000/users/login`, userData)
+    console.log("userData", userData)
+
+
+
+
+
+
+    const response = await axios.post(`http://localhost:4000/users/login`, {email:email, password:password})
     if(response.status === 200){
          const data = response.data;
+         console.log(data)
          setUser(data.user);
+         console.log(data.token)
+         localStorage.setItem('token', data.token);
          navigate("/home")
          
     }
