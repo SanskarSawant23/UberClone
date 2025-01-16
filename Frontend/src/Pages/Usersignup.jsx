@@ -1,8 +1,8 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useState } from 'react'
-import { use } from 'react'
-
+import axios from 'axios'
+import {UserDataContext} from '../Context/Usercontext'
 
 const Usersignup = () => {
    const[email, setEmail] = useState('') 
@@ -10,24 +10,39 @@ const Usersignup = () => {
    const[name, setName] = useState('')
    const[lastname, setLastname] = useState('');
    const[userData, setUserData] = useState({});
-   const onSubmithandler = (e)=>{
+
+   console.log("password", password)
+   const navigate = useNavigate();
+
+   const {user, setUser} = React.useContext(UserDataContext);
+   const onSubmithandler = async (e)=>{
       e.preventDefault();
-      console.log('eeelo')
-  
-      setUserData({
+     
+      const newUser = {
         fullname:{
-         firstname:firstname,
-         lastname:lastname
+            firstname: name,
+            lastname: lastname
         },
-        email:email,
-        password:password
-    })
-      console.log(userData);
-      setEmail(' ');
-      setPassword(' ');
-      setName(' ');
-      setPassword(' ');
-      setLastname(' ')
+        email: email,
+        password: password
+
+      }
+      console.log(newUser)
+      const response = await axios.post(`http://localhost:4000/users/register`, newUser)
+      if(response.status === 201){
+        const data = response.data
+        setUser(data.user);
+        console.log("navigation to /home")
+        navigate('/home')
+        console.log("navigation complete")
+      }
+   
+      setEmail('');
+      setPassword('');
+      setName('');
+      setPassword("");
+      setLastname('')
+
   }
   
     return (
@@ -73,7 +88,7 @@ const Usersignup = () => {
               value={password}
               placeholder='Password' />
   
-              <button className='bg-[#111] text-white font-semibold mb-7 rounded px-4 py-2 w-full' >Login</button>
+              <button className='bg-[#111] text-white font-semibold mb-7 rounded px-4 py-2 w-full' >Create Account</button>
               <p className='text-center '>Already have acount? <Link to={'/login'} className = "text-blue-600">Sign in</Link>
   
               </p>
